@@ -331,11 +331,53 @@ nav.nav-scrolled .nav-links a { color: var(--black); }
 .footer-col a:hover { opacity: .5; }
 
 /* ══════════════════════════════════
+   HAMBURGER BUTTON
+══════════════════════════════════ */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 400;
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--white);
+  transition: transform .3s ease, opacity .3s ease, background .4s ease;
+}
+nav.nav-scrolled .nav-burger span { background: var(--black); }
+nav.menu-open .nav-burger span { background: var(--black); }
+nav.menu-open .nav-burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+nav.menu-open .nav-burger span:nth-child(2) { opacity: 0; }
+nav.menu-open .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ══════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════ */
 @media (max-width: 860px) {
   nav { padding: 1rem 1.4rem; }
-  .nav-links { gap: 1.2rem; }
+  .nav-burger { display: flex; }
+  .nav-links {
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 350;
+  }
+  .nav-links.open { opacity: 1; pointer-events: all; }
+  .nav-links a { color: var(--black) !important; font-size: 1.2rem; }
   #hero, #work, #resume, #skills, #contact { padding-left: 1.4rem; padding-right: 1.4rem; }
   .work-grid { grid-template-columns: repeat(2,1fr); }
   .service-panel { grid-template-columns: 1fr; }
@@ -343,6 +385,7 @@ nav.nav-scrolled .nav-links a { color: var(--black); }
   .service-nav { right: 1.4rem; top: 1.4rem; }
   .accordion-header { grid-template-columns: 1fr 28px; }
   .acc-date, .acc-company { display: none; }
+  .accordion-body-inner { padding-left: 0; }
   .skill-header { grid-template-columns: 1fr 28px; }
   .skill-level { display: none; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -375,6 +418,7 @@ nav.nav-scrolled .nav-links a { color: var(--black); }
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- ═══ HERO ═══ -->
@@ -842,6 +886,19 @@ document.querySelectorAll('.skill-item.open').forEach(item => {
   setupFadeIn('.accordion-item');
   setupFadeIn('.skill-item');
   setupFadeIn('.work-card', 0.12);
+
+  /* ── Mobile burger menu ── */
+  const burger   = document.querySelector('.nav-burger');
+  const navEl    = document.querySelector('nav');
+  const navLinks = document.querySelector('.nav-links');
+  burger.addEventListener('click', () => {
+    navEl.classList.toggle('menu-open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navEl.classList.remove('menu-open');
+    navLinks.classList.remove('open');
+  }));
 
   /* first service panel text – fires once on first scroll, not on arrow press */
   const panelTextEls = document.querySelectorAll('#service-panels .service-left > *');
