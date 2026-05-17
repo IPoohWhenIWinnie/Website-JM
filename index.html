@@ -416,7 +416,7 @@ nav.nav-scrolled .nav-links a { color: var(--black); }
     <!-- Card 2 -->
     <div class="work-card">
       <div class="work-card-img">
-        <img src="content/my-latest-work/02/image.jpg" alt="Plastic Pouch"/>
+        <img src="content/my-latest-work/02/image.png" alt="Plastic Pouch"/>
         <a class="behance-badge" href="https://www.behance.net/" target="_blank" rel="noopener" title="View on Behance" onclick="event.stopPropagation()">
           <img src="content/Assets/Icons/link-icon.png" alt="Behance"/>
         </a>
@@ -430,7 +430,7 @@ nav.nav-scrolled .nav-links a { color: var(--black); }
     <!-- Card 3 -->
     <div class="work-card">
       <div class="work-card-img">
-        <img src="content/my-latest-work/03/image.jpg" alt="Open Magazine"/>
+        <img src="content/my-latest-work/03/image.png" alt="Open Magazine"/>
         <a class="behance-badge" href="https://www.behance.net/" target="_blank" rel="noopener" title="View on Behance" onclick="event.stopPropagation()">
           <img src="content/Assets/Icons/link-icon.png" alt="Behance"/>
         </a>
@@ -444,7 +444,7 @@ nav.nav-scrolled .nav-links a { color: var(--black); }
     <!-- Card 4 -->
     <div class="work-card">
       <div class="work-card-img">
-        <img src="content/my-latest-work/04/image.jpg" alt="Newspaper"/>
+        <img src="content/my-latest-work/04/image.png" alt="Newspaper"/>
         <a class="behance-badge" href="https://www.behance.net/" target="_blank" rel="noopener" title="View on Behance" onclick="event.stopPropagation()">
           <img src="content/Assets/Icons/link-icon.png" alt="Behance"/>
         </a>
@@ -823,11 +823,11 @@ document.querySelectorAll('.skill-item.open').forEach(item => {
 
 /* ── Accordion entrance animations ── */
 (function () {
-  function setupFadeIn(selector) {
+  function setupFadeIn(selector, stagger = 0.08) {
     const items = document.querySelectorAll(selector);
     items.forEach((el, i) => {
       el.classList.add('acc-anim-pending');
-      el.style.setProperty('--acc-stagger', (i * 0.08) + 's');
+      el.style.setProperty('--acc-stagger', (i * stagger) + 's');
     });
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -841,7 +841,7 @@ document.querySelectorAll('.skill-item.open').forEach(item => {
   }
   setupFadeIn('.accordion-item');
   setupFadeIn('.skill-item');
-  setupFadeIn('.work-card-meta');
+  setupFadeIn('.work-card', 0.12);
 
   /* first service panel text – fires once on first scroll, not on arrow press */
   const panelTextEls = document.querySelectorAll('#service-panels .service-left > *');
